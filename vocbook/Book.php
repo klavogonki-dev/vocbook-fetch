@@ -89,14 +89,30 @@ class Book extends BookFlag {
 		return $this;
 	}
 
-	public function save_parts () {
-		usort($this->parts, function (BookPart $a, BookPart $b) {
-			return $a->number - $b->number;
-		});
+	public function save_parts ($converter = NULL) {
+		$file = $this->getPartsLocalPath();
+		if (false === ($handle = @fopen($file, 'r+')))
+			throw new \Exception("can't open to write file `{$file}`");
 
-		print_r($this->parts);
+		foreach ($this->parts as $p) {
+			if (is_callable($converter)) {
+				fwrite($handle, $converter($p));
+			} else {
+				fwrite($handle, print_r($p, true));
+			}
+		}
 
 		return $this;
+	}
+
+	public function view_parts ($converter = NULL) {
+		foreach ($this->parts as $p) {
+			if (is_callable($converter)) {
+				print $converter($p);
+			} else {
+				print_r($p);
+			}
+		}
 	}
 
 	public function split (callable $parser) {
@@ -112,7 +128,17 @@ class Book extends BookFlag {
 		$result = $parser($handle, [$this, 'add_part'], $flags);
 		fclose($handle);
 
-		$this->save_parts();
+		// sort all parts by part number
+		usort($this->parts, function (BookPart $a, BookPart $b) {
+			return $a->number - $b->number;
+		});
+
+		// check for missed parts
+		$i = 0;
+		foreach ($this->parts as $p) {
+			if ($p->number !== ++$i)
+				throw new \Exception("Part with number=`{$i}` is missed");
+		}
 
 		return $this;
 	}
