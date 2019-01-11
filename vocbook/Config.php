@@ -19,7 +19,7 @@ class Config {
 		$check_list = ['data'];
 
 		foreach ($check_list as $key) {
-			if (isset($cfg[$key]) && !is_dir($cfg[$key])) {
+			if (isset($cfg[$key]) && $key === 'data' && !is_dir($cfg[$key])) {
 				throw new \Exception("books directory is not exists: `{$cfg[$key]}`");
 			}
 		}
