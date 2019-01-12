@@ -11,6 +11,7 @@ class Book extends BookFlag {
 		else {
 			switch ($key) {
 				case 'parts': return $this->parts;
+				case 'type': return "public";
 			}
 		}
 
@@ -101,6 +102,8 @@ class Book extends BookFlag {
 				fwrite($handle, print_r($p, true));
 			}
 		}
+
+		fclose($handle);
 
 		return $this;
 	}
