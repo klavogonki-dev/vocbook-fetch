@@ -10,7 +10,7 @@ class Book extends BookFlag {
 			return $this->resource[$key];
 		else {
 			switch ($key) {
-				case 'parts': return $parts;
+				case 'parts': return $this->parts;
 			}
 		}
 
@@ -70,10 +70,10 @@ class Book extends BookFlag {
 	
 	private $last_added_part = 0;
 
-	public function add_part ($text, $number) {
+	public function add_part ($text, $number = null) {
 		if (is_int($number) && is_string($text)) {
 			$part = new BookPart($text, $number);
-		} else if (!($number instanceof BookPart)) {
+		} else if (!($text instanceof BookPart)) {
 			throw new \Exception("incorrect type argument(s)");
 		} else {
 			$part = $text;
