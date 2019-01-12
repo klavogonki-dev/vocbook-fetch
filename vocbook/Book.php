@@ -91,7 +91,7 @@ class Book extends BookFlag {
 
 	public function save_parts ($converter = NULL) {
 		$file = $this->getPartsLocalPath();
-		if (false === ($handle = @fopen($file, 'r+')))
+		if (false === ($handle = @fopen($file, 'w+')))
 			throw new \Exception("can't open to write file `{$file}`");
 
 		foreach ($this->parts as $p) {
