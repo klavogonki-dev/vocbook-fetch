@@ -5,7 +5,7 @@ class BookPart {
 	protected $number = NULL;
 	protected $text = NULL;
 
-	public function __get (string $key) {
+	public function __get ($key) {
 		switch ($key) {
 			case 'text': return $this->text;
 			case 'number': return $this->number;

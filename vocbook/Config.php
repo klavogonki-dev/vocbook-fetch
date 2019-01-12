@@ -4,7 +4,7 @@ namespace vocbook;
 class Config {
 	protected static $cfg = null;
 
-	protected static function default () {
+	protected static function default_cfg () {
 		return [
 			"data" => realpath(__DIR__ . "/../data")
 		];
@@ -27,7 +27,7 @@ class Config {
 
 	public static function get () {
 		if (!static::$cfg) {
-			static::$cfg = static::default();
+			static::$cfg = static::default_cfg();
 		}
 
 		return static::$cfg;
