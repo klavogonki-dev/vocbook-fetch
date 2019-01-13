@@ -19,8 +19,8 @@ class libru extends Driver {
 				// $buffer = strip_tags($buffer);
 				fwrite($sw, $buffer);
 			}
+			fclose($sr);
 		}
-		fclose($sr);
 	}
 
 	protected function getURI () {
