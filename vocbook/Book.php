@@ -22,7 +22,7 @@ class Book extends BookFlag {
 		foreach ($available_keys as $key) {
 			if (empty($resource[$key]))
 				throw new \Exception("Not found `{$key}` key");
-			$this->resource = $resource;
+			$this->resource[$key] = $resource[$key];
 		}
 	}
 
